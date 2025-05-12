@@ -54,17 +54,17 @@
               >{{ product.price }} €</span
             >
             <div class="footer">
-              @if(true){
+              @if(this.productStore.isProductInList(product.id)){
               <p-button
                 label="Supprimer"
                 severity="danger"
-                (onClick)="onDelete(product)"
+                (onClick)="removeProductToList(product.id)"
               />
               }
               <p-button
                 label="Ajouter"
                 severity="secondary"
-                (onClick)="onUpdate(product)"
+                (onClick)="addProductToList(product)"
               />
             </div>
           </div>

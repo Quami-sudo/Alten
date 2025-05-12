@@ -1,7 +1,8 @@
-import { Component, OnInit, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { Product } from "app/products/data-access/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
+import { ProductStore } from "app/products/store/shopping-state";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
@@ -32,6 +33,7 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Default,
   imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, RatingModule, FormsModule, TagModule],
 })
 export class ProductListComponent implements OnInit {
@@ -42,10 +44,19 @@ export class ProductListComponent implements OnInit {
   public isDialogVisible = false;
   public isCreation = false;
   public readonly editedProduct = signal<Product>(emptyProduct);
+  public readonly productStore = inject(ProductStore);
 
   ngOnInit() {
     this.productsService.get().subscribe((data) => console.log(data)
     );
+  }
+
+  public addProductToList(product: Product){
+    this.productStore.addProduct(product);
+  }
+
+  public removeProductToList(productId: number){
+    this.productStore.removeProduct(productId);
   }
 
   public onCreate() {
