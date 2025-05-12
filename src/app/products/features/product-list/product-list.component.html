@@ -1,31 +1,90 @@
 <h1 class="text-center">Liste des produits</h1>
 
-<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+<p-button
+  label="Créer produit"
+  (onClick)="onCreate()"
+  class="block text-center"
+/>
 
 <p-dataView #dv [value]="products()">
-    <ng-template pTemplate="list" let-products>
-        @for (product of products; track product) {
-            <p-card class="block mb-2">
-                <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
-                <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+  <ng-template pTemplate="list" let-products>
+    @for (product of products; track product) {
+    <p-card class="block mb-2">
+      <div class="card-container">
+        <div class="image">
+          <img [src]="'assets/images/' + product.image" />
+        </div>
+        <div class="data-container">
+          <div class="header">
+            <span class="text-lg font-medium text-900 mt-2">{{
+              product.name
+            }}</span>
+            <p-rating
+              [(ngModel)]="product.rating"
+              [readonly]="true"
+              [cancel]="false"
+            />
+          </div>
+          <div class="body">
+            <p-tag
+              severity="info"
+              [value]="product.category"
+              [rounded]="true"
+            />
+            @switch (product.inventoryStatus) { @case ("INSTOCK"){
+            <p-tag
+              severity="success"
+              [value]="product.inventoryStatus"
+              [rounded]="true"
+            />
+            } @case ("LOWSTOCK"){
+            <p-tag
+              severity="warning"
+              [value]="product.inventoryStatus"
+              [rounded]="true"
+            />
+            } @default {
+            <p-tag
+              severity="danger"
+              [value]="product.inventoryStatus"
+              [rounded]="true"
+            />
+            } }
+            <span class="price text-lg font-medium text-900"
+              >{{ product.price }} €</span
+            >
+            <div class="footer">
+              @if(true){
+              <p-button
+                label="Supprimer"
+                severity="danger"
+                (onClick)="onDelete(product)"
+              />
+              }
+              <p-button
+                label="Ajouter"
+                severity="secondary"
+                (onClick)="onUpdate(product)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <ng-template pTemplate="footer">
-                    <div class="flex gap-3 mt-1">
-                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
-                        <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
-                    </div>
-                </ng-template>
-            </p-card>
-        }
-    </ng-template>
+      <ng-template pTemplate="footer"> </ng-template>
+    </p-card>
+    }
+  </ng-template>
 </p-dataView>
 
-<p-dialog [(visible)]="isDialogVisible"
-    [style]="{ width: '50vw' }"
-    header="Ajout/Edition produit">
-    <app-product-form
-        [product]="editedProduct()"
-        (save)="onSave($event)"
-        (cancel)="onCancel()"
-    />
+<p-dialog
+  [(visible)]="isDialogVisible"
+  [style]="{ width: '50vw' }"
+  header="Ajout/Edition produit"
+>
+  <app-product-form
+    [product]="editedProduct()"
+    (save)="onSave($event)"
+    (cancel)="onCancel()"
+  />
 </p-dialog>
