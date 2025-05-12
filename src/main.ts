@@ -14,6 +14,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { DialogService } from "primeng/dynamicdialog";
 import { AppComponent } from "./app/app.component";
 import { environment } from "./environments/environment";
+import { provideStore } from '@ngrx/store';
 
 if (environment.production) {
   enableProdMode();
@@ -22,15 +23,14 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule),
-    provideHttpClient(
-      withInterceptorsFromDi(),
-    ),
+    provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideRouter(APP_ROUTES),
     ConfirmationService,
     MessageService,
     DialogService,
-  ],
+    provideStore()
+],
 }).catch((err) => console.log(err));
 
 registerLocaleData(localeFr, "fr-FR");
