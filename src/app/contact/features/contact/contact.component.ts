@@ -31,8 +31,6 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.contactForm);
-
     if (this.contactForm.valid) {
       this.messageService.add({ severity: SeverityEnum.SUCCESS, summary: 'Succès', detail: 'Demande de contact envoyée avec succès' });
     }else{

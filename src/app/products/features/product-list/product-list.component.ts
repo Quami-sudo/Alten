@@ -48,8 +48,7 @@ export class ProductListComponent implements OnInit {
   public readonly productStore = inject(ProductStore);
 
   ngOnInit() {
-    this.productsService.get().subscribe((data) => console.log(data)
-    );
+    this.productsService.get().subscribe();
   }
 
   public addProductToList(product: Product){
