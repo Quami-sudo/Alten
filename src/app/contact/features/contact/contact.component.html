@@ -1,1 +1,41 @@
-feature contact
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="p-fluid p-4">
+  <div class="field">
+    <label for="email">Email</label>
+    <p-inputMask
+      id="email"
+      formControlName="email"
+      mask="aa*@a*.aaa"
+      placeholder="nom.prenom@gmail.com"
+    ></p-inputMask>
+    @if(contactForm.get('email')?.invalid && contactForm.get('email')?.touched){
+    <small class="p-error"> Email invalide ou requis </small>
+    }
+  </div>
+
+  <div class="field">
+    <label for="message">Message</label>
+    <textarea
+      id="message"
+      pInputTextarea
+      formControlName="message"
+      rows="6"
+      placeholder="Votre message (max 300 mots)"
+    ></textarea>
+    @if(contactForm.get('message')?.hasError('maxWords')){
+    <small class="p-error"> Le message ne doit pas dépasser 300 mots. </small>
+    } @if(contactForm.get('message')?.hasError('required') &&
+    contactForm.get('message')?.touched){
+    <small class="p-error"> Le message est requis. </small>
+    }
+  </div>
+
+  <button
+    pButton
+    type="submit"
+    label="Envoyer"
+    [disabled]="contactForm.invalid"
+    class="mt-3"
+  ></button>
+</form>
+
+<p-toast />
