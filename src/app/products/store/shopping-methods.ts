@@ -29,7 +29,11 @@ export function withProductsMethods() {
 
         isProductInList(productId: number): boolean{
           return store.shoppingItems().findIndex(item => item.id === productId) > -1;
-        }
+        },
+
+        getNumberOfItem(productId: number): number{
+          return store.shoppingItems().find(item => item.id === productId)?.numberOfItem ?? 0;
+        },
       };
     })
   );

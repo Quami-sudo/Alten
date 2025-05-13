@@ -10,6 +10,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
+import { BadgeModule } from 'primeng/badge';
 
 const emptyProduct: Product = {
   id: 0,
@@ -34,7 +35,7 @@ const emptyProduct: Product = {
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, RatingModule, FormsModule, TagModule],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent, RatingModule, FormsModule, TagModule, BadgeModule],
 })
 export class ProductListComponent implements OnInit {
   private readonly productsService = inject(ProductsService);

@@ -1,0 +1,26 @@
+<div class="panel-container">
+  <span class="title">Panier</span>
+  <div class="items-list">
+    @for (item of this.shoppingStore.shoppingItems(); track $index) {
+    <div class="item-card">
+      <div class="left-side">
+        <span>{{ item.name }}</span>
+        <div>
+          <span>{{ item.numberOfItem }} x {{ item.price }} €</span>
+        </div>
+      </div>
+      <div class="right-side">
+        <p-button
+          type="button"
+          icon="pi pi-trash"
+          (click)="this.shoppingStore.removeProduct(item.id)"
+          styleClass="min-w-48"
+        />
+      </div>
+    </div>
+    }@empty {
+    <span class="empty">Le panier est vide</span>
+    }
+  </div>
+  <span class="total">Total : {{ this.total() }}€</span>
+</div>

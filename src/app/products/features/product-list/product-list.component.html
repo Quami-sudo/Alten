@@ -16,9 +16,14 @@
         </div>
         <div class="data-container">
           <div class="header">
-            <span class="text-lg font-medium text-900 mt-2">{{
-              product.name
-            }}</span>
+            <div class="header-left-side">
+              <span class="text-lg font-medium text-900">{{
+                product.name
+              }}</span>
+              <p-badge
+                [value]="this.productStore.getNumberOfItem(product.id)"
+              />
+            </div>
             <p-rating
               [(ngModel)]="product.rating"
               [readonly]="true"
