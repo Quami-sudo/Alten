@@ -1,12 +1,13 @@
-<h1 class="text-center">Liste des produits</h1>
+<div class="header">
+  <span class="text-center">Liste des produits</span>
+  <p-button
+    label="Créer produit"
+    (onClick)="onCreate()"
+    class="block text-center"
+  />
+</div>
 
-<p-button
-  label="Créer produit"
-  (onClick)="onCreate()"
-  class="block text-center"
-/>
-
-<p-dataView #dv [value]="products()">
+<p-dataView #dv [value]="products()" [paginator]="true" [rows]="5">
   <ng-template pTemplate="list" let-products>
     @for (product of products; track product) {
     <p-card class="block mb-2">
@@ -15,8 +16,8 @@
           <img [src]="'assets/images/' + product.image" />
         </div>
         <div class="data-container">
-          <div class="header">
-            <div class="header-left-side">
+          <div class="side">
+            <div class="header-card">
               <span class="text-lg font-medium text-900">{{
                 product.name
               }}</span>
@@ -24,13 +25,6 @@
                 [value]="this.productStore.getNumberOfItem(product.id)"
               />
             </div>
-            <p-rating
-              [(ngModel)]="product.rating"
-              [readonly]="true"
-              [cancel]="false"
-            />
-          </div>
-          <div class="body">
             <p-tag
               severity="info"
               [value]="product.category"
@@ -55,6 +49,13 @@
               [rounded]="true"
             />
             } }
+          </div>
+          <div class="side">
+            <p-rating
+              [(ngModel)]="product.rating"
+              [readonly]="true"
+              [cancel]="false"
+            />
             <span class="price text-lg font-medium text-900"
               >{{ product.price }} €</span
             >
@@ -75,8 +76,6 @@
           </div>
         </div>
       </div>
-
-      <ng-template pTemplate="footer"> </ng-template>
     </p-card>
     }
   </ng-template>
